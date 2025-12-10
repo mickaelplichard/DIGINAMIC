@@ -1,31 +1,34 @@
+DROP DATABASE IF EXISTS compta;
+CREATE DATABASE compta;
 
-CREATE TABLE client (
+CREATE TABLE IF NOT EXISTS fournisseur (
     id SERIAL PRIMARY KEY,
-    nom VARCHAR(50) NOT NULL,
-    prenom VARCHAR(50) NOT NULL,
-    ville VARCHAR(25),
-    age INT
+    nom VARCHAR(25) NOT NULL
 );
 
-CREATE TABLE compte (
+CREATE TABLE IF NOT EXISTS article (
     id SERIAL PRIMARY KEY,
-    type_compte VARCHAR(20) NOT NULL,
-    id_cli INT,
-    solde DECIMAL(12,2),
-    CONSTRAINT fk_client FOREIGN KEY (id_cli) REFERENCES client(id)
+    ref VARCHAR(13) NOT NULL,
+    designation VARCHAR(255) NOT NULL,
+    prix DECIMAL(7,2) NOT NULL,
+    id_fou INT NOT NULL,
+    CONSTRAINT fk_article_fou FOREIGN KEY (id_fou) REFERENCES fournisseur(id)
 );
 
-CREATE TABLE transaction (
+CREATE TABLE IF NOT EXISTS bon (
     id SERIAL PRIMARY KEY,
-    id_compte INT NOT NULL,
-    montant DECIMAL(12,2) NOT NULL,
-    date_transaction TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_compte FOREIGN KEY (id_compte) REFERENCES compte(id)
+    numero INT,
+    date_cmde TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    delai INT,
+    id_fou INT NOT NULL,
+    CONSTRAINT fk_bon_fou FOREIGN KEY (id_fou) REFERENCES fournisseur(id)
 );
 
-CREATE TABLE agence (
+CREATE TABLE IF NOT EXISTS compo (
     id SERIAL PRIMARY KEY,
-    nom VARCHAR(50) NOT NULL,
-    ville VARCHAR(25) NOT NULL
+    id_art INT NOT NULL,
+    id_bon INT NOT NULL,
+    qte INT NOT NULL,
+    CONSTRAINT fk_compo_art FOREIGN KEY (id_art) REFERENCES article(id),
+    CONSTRAINT fk_compo_bon FOREIGN KEY (id_bon) REFERENCES bon(id)
 );
-
