@@ -1,4 +1,4 @@
-\c compta2
+\c compta
 
 INSERT INTO fournisseur (id, nom) 
 VALUES 
