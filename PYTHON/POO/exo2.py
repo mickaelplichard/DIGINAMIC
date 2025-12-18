@@ -4,10 +4,35 @@ from abc import ABC, abstractmethod
 class Vehicule(ABC):
     #Constructeur
     def __init__(self, marque, modele, annee):
-        self.marque = marque
-        self.modele = modele
-        self.annee = annee
-        self.vitesse = 0
+        self._marque = marque
+        self._modele = modele
+        self._annee = annee
+        self._vitesse = 0
+
+    # Getters / Setters
+    def get_marque(self):
+        return self._marque
+
+    def set_marque(self, marque):
+        self._marque = marque
+
+    def get_modele(self):
+        return self._modele
+
+    def set_modele(self, modele):
+        self._modele = modele
+
+    def get_annee(self):
+        return self._annee
+
+    def set_annee(self, annee):
+        self._annee = annee
+
+    def get_vitesse(self):
+        return self._vitesse
+
+    def set_vitesse(self, vitesse):
+        self._vitesse = vitesse
 
     # Méthode abstraite
     @abstractmethod
@@ -15,7 +40,7 @@ class Vehicule(ABC):
         pass
 
     def arreter(self):
-        self.vitesse = 0
+        self._vitesse = 0
 
     #Méthode de classe
     @classmethod
@@ -32,10 +57,16 @@ class Voiture(Vehicule):
     # Constructeur
     def __init__(self, marque, modele, annee, nb_portes: int):
         super().__init__(marque, modele, annee)
-        self.nb_portes = nb_portes
+        self.__nb_portes = nb_portes
+
+    def get_nb_portes(self):
+        return self.__nb_portes
+
+    def set_nb_portes(self, nb_portes):
+        self.__nb_portes =nb_portes
 
     def accelerer(self):
-        self.vitesse += 1
+        self._vitesse += 1
 
 # Classe fille Moto
 class Moto(Vehicule):
@@ -43,7 +74,7 @@ class Moto(Vehicule):
         super().__init__(marque, modele, annee)
 
     def accelerer(self):
-        self.vitesse += 2
+        self._vitesse += 2
 
     def acrobaties(self):
         print("Wheel_in !")
@@ -56,6 +87,8 @@ v1.accelerer()
 v2.accelerer()
 v2.acrobaties()
 
-print(v1.vitesse)
-print(v2.vitesse)
+print(v1.get_vitesse())
+print(v2.get_vitesse())
+print(v1.get_nb_portes())
+print(v2.acrobaties)
     
